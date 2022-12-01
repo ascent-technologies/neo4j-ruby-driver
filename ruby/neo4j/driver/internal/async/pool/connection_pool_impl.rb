@@ -31,7 +31,7 @@ module Neo4j::Driver
           def retain_all(addresses_to_retain)
             @address_to_pool_lock.with_write_lock do
               @address_to_pool.each do |address, pool|
-                unless addresses_to_retain.include?(address)
+                unless addresses_to_retain.flatten.include?(address)
                   unless pool.busy?
                     # address is not present in updated routing table and has no active connections
                     # it's now safe to terminate corresponding connection pool and forget about it
