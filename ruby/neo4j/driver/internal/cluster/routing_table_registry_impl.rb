@@ -57,7 +57,7 @@ module Neo4j::Driver
 
         def remove(database_name)
           @routing_table_handlers.delete(database_name)
-          @log.debug("Routing table handler for database '#{database_name.description}' is removed.")
+          @log.info("Routing table handler for database '#{database_name.description}' is removed.")
         end
 
         def remove_aged
@@ -82,7 +82,7 @@ module Neo4j::Driver
             # TODO: Verify if applies
             # Note: Atomic methods taking a block do not allow the self instance to be used within the block. Doing so will cause a deadlock.
             handler = @factory.new_instance(database_name, self)
-            @log.debug("Routing table handler for database '#{database_name.description}' is added.")
+            @log.info("Routing table handler for database '#{database_name.description}' is added.")
             handler
           end
         end

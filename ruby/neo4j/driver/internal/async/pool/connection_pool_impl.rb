@@ -13,14 +13,14 @@ module Neo4j::Driver
           end
 
           def acquire(address)
-            @log.debug("Acquiring a connection from pool towards #{address}")
+            @log.info("Acquiring a connection from pool towards #{address}")
 
             assert_not_closed
             pool = get_or_create_pool(address)
 
             begin
               channel = pool.acquire
-              @log.debug { "Channel #{channel.object_id} acquired" }
+              @log.info { "Channel #{channel.object_id} acquired" }
             rescue => error
               process_acquisition_error(pool, address, error)
             end

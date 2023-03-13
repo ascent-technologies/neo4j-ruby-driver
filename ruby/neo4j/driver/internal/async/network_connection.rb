@@ -102,7 +102,8 @@ module Neo4j::Driver
           end
         rescue EOFError, Errno::ECONNRESET, Errno::EPIPE => e
           terminate_and_release(e.message)
-          @log.debug("Shutting down connection pool towards #{@server_address} due to error: #{e.message}")
+          @log.info("Shutting down connection pool towards #{@server_address} due to error: #{e.message}")
+          @log.info(e.backtrace)
           @channel_pool.shutdown(&:close)
           @on_pool_shutdow.call
           # should remove routing table entry as well
@@ -172,13 +173,13 @@ module Neo4j::Driver
           if !@connection_read_timeout.nil? && @connection_read_timeout_handler.nil?
             connection_read_timeout_handler = Inbound::ConnectionReadTimeoutHandler.new(@connection_read_timeout, java.util.concurrent.TimeUnit::SECONDS)
             channel.pipeline.add_first(connection_read_timeout_handler)
-            @log.debug('Added ConnectionReadTimeoutHandler')
+            @log.info('Added ConnectionReadTimeoutHandler')
 
             @message_dispatcher.set_before_last_handler_hook do |message_type|
               channel.pipeline.remove(connection_read_timeout_handler)
               connection_read_timeout_handler = nil
               @message_dispatcher.set_before_last_handler_hook(nil)
-              log.debug('Removed ConnectionReadTimeoutHandler')
+              log.info('Removed ConnectionReadTimeoutHandler')
             end
           end
         end

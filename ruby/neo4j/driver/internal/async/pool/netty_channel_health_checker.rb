@@ -36,7 +36,7 @@ module Neo4j::Driver
             min_creation_timestamp_millis_opt = min_creation_timestamp_millis_opt.get
 
             if min_creation_timestamp_millis_opt.present? && creation_timestamp_millis <= min_creation_timestamp_millis_opt.get
-              log.debug("The channel #{channel} is marked for closure as its creation timestamp is older than or equal to the acceptable minimum timestamp: #{creation_timestamp_millis} <= #{min_creation_timestamp_millis_opt.get}")
+              log.info("The channel #{channel} is marked for closure as its creation timestamp is older than or equal to the acceptable minimum timestamp: #{creation_timestamp_millis} <= #{min_creation_timestamp_millis_opt.get}")
               return true
             end
 
@@ -49,7 +49,7 @@ module Neo4j::Driver
               too_old = age_millis > max_age_millis
 
               if too_old
-                log.debug("Failed acquire channel #{channel} from the pool because it is too old: #{age_millis} > #{max_age_millis}")
+                log.info("Failed acquire channel #{channel} from the pool because it is too old: #{age_millis} > #{max_age_millis}")
               end
               return too_old
             end
@@ -65,7 +65,7 @@ module Neo4j::Driver
                 idle_too_long = idle_time > pool_settings.idle_time_before_connection_test
 
                 if idle_too_long
-                  log.debug( "Channel #{channel} has been idle for #{idle_time} and needs a ping")
+                  log.info( "Channel #{channel} has been idle for #{idle_time} and needs a ping")
                 end
 
                 return idle_too_long

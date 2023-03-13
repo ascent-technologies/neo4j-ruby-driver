@@ -21,7 +21,7 @@ module Neo4j::Driver
               channel.close_future.add_listener(close_listener)
             end
 
-            log.debug("Channel [0x#{channel.id}] acquired from the pool. Local address: #{channel.local_address}, remote address: #{channel.remote_address}")
+            log.info("Channel [0x#{channel.id}] acquired from the pool. Local address: #{channel.local_address}, remote address: #{channel.remote_address}")
           end
 
           def channel_created(channel, creating_event = nil)
@@ -33,7 +33,7 @@ module Neo4j::Driver
 
               metrics_listener.after_created(Connection::ChannelAttributes.pool_id(channel), creating_event)
               all_channels.add(channel)
-              log.debug( "Channel [0x#{channel.id}] created. Local address: #{channel.local_address}, remote address: #{channel.remote_address}")
+              log.info( "Channel [0x#{channel.id}] created. Local address: #{channel.local_address}, remote address: #{channel.remote_address}")
             end
           end
 
@@ -67,7 +67,7 @@ module Neo4j::Driver
                 protocol.prepare_to_close_channel(channel)
               rescue Exception => e
                 # only logging it
-                log.debug( "Failed to prepare to close Channel #{channel} due to error #{e.get_message}. It is safe to ignore this error as the channel will be closed despite if it is successfully prepared to close or not.")
+                log.info( "Failed to prepare to close Channel #{channel} due to error #{e.get_message}. It is safe to ignore this error as the channel will be closed despite if it is successfully prepared to close or not.")
               end
             end
           end

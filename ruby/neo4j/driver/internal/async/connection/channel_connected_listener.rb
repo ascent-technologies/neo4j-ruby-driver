@@ -9,11 +9,11 @@ module Neo4j::Driver
             log = Logging::ChannelActivityLogger.new(channel, logger, self.class)
 
             if future.fulfilled?
-              log.debug("Channel #{channel} connected, initiating bolt handshake")
+              log.info("Channel #{channel} connected, initiating bolt handshake")
 
               pipeline = channel.pipeline
               pipeline.add_last(HandshakeHandler.new(pipeline_builder, handshake_completed_promise, logger))
-              log.debug("C: [Bolt Handshake] #{BoltProtocolUtil.handshake_string}")
+              log.info("C: [Bolt Handshake] #{BoltProtocolUtil.handshake_string}")
               channel.write_and_flush(BoltProtocolUtil.handshake_buf, channel.void_promise)
             else
               handshake_completed_promise.set_failure(self.class.database_unavailable_error(address, future.cause))

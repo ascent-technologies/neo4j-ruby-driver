@@ -112,7 +112,7 @@ module Neo4j::Driver
           Util::Futures.combine_errors(base_error, discovery_error) # we record each failure here
           warning_message = RECOVERABLE_DISCOVERY_ERROR_WITH_SERVER % router_address
           @log.warn(warning_message)
-          @log.debug(discovery_error)
+          @log.info(discovery_error)
           routing_table.forget(router_address)
           nil
         end

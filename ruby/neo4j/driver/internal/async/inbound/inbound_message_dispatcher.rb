@@ -49,7 +49,7 @@ module Neo4j::Driver
           end
 
           def handle_failure_message(code:, message:)
-            @log.debug("S: FAILURE #{code}, '#{message}'")
+            @log.info("S: FAILURE #{code}, '#{message}'")
             @current_error = Util::ErrorUtil.new_neo4j_error(code, message)
 
             # we should not continue using channel after a fatal error
@@ -73,7 +73,7 @@ module Neo4j::Driver
           end
 
           def handle_ignored_message
-            @log.debug('S: IGNORED')
+            @log.info('S: IGNORED')
             handler = remove_handler
 
             if @current_error
@@ -111,7 +111,7 @@ module Neo4j::Driver
               handler.on_failure(@current_error)
             end
 
-            @error_log.trace_or_debug('Closing channel because of a failure', error)
+            @error_log.info('Closing channel because of a failure', error)
             @channel.close
           end
 

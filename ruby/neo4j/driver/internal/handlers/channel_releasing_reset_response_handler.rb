@@ -22,7 +22,7 @@ module Neo4j::Driver
           nil
         ensure
           @pool.release(@channel)
-          @log.debug { "Channel #{@channel.object_id} released." }
+          @log.info { "Channel #{@channel.object_id} released." }
         end
       end
     end

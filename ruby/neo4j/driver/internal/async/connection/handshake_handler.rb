@@ -19,7 +19,7 @@ module Neo4j::Driver
           end
 
           def channel_inactive(ctx)
-            @log.debug('Channel is inactive')
+            @log.info('Channel is inactive')
 
             unless @failed
               # channel became inactive while doing bolt handshake, not because of some previous error
@@ -30,7 +30,7 @@ module Neo4j::Driver
 
           def exception_caught(ctx, error)
             if @failed
-              @error_log.debug('Another fatal error occurred in the pipeline', error)
+              @error_log.info('Another fatal error occurred in the pipeline', error)
             else
               @failed = true
               cause = transform_error(error)
@@ -40,7 +40,7 @@ module Neo4j::Driver
 
           def decode(connection)
             server_suggested_version = Messaging::BoltProtocolVersion.from_raw_bytes(connection.stream.read_int)
-            @log.debug("S: [Bolt Handshake] #{server_suggested_version}")
+            @log.info("S: [Bolt Handshake] #{server_suggested_version}")
             # ::Logger.new(STDOUT, level: :debug).debug("S: [Bolt Handshake] #{server_suggested_version}")
 
             protocol = protocol_for_version(server_suggested_version)

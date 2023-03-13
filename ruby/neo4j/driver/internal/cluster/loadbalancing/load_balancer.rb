@@ -77,7 +77,7 @@ module Neo4j::Driver
               @connection_pool.acquire(address)
             rescue Exceptions::ServiceUnavailableException => error
               @log.warn { CONNECTION_ACQUISITION_ATTEMPT_FAILURE_MESSAGE % address }
-              @log.debug(error)
+              @log.info(error)
               attempt_errors << error
               routing_table.forget(address)
               acquire(mode, routing_table, attempt_errors)

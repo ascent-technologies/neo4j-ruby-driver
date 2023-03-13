@@ -29,7 +29,7 @@ module Neo4j::Driver
           def select(addresses, addresses_index, address_type)
             size = addresses.size
             if size == 0
-              @log.debug("Unable to select #{address_type}, no known addresses given")
+              @log.info("Unable to select #{address_type}, no known addresses given")
               return
             end
 
@@ -57,7 +57,7 @@ module Neo4j::Driver
               break if index == start_index
             end
 
-            @log.debug("Selected #{address_type} with address: '#{least_connected_address}' and active connections: #{least_active_connections}")
+            @log.info("Selected #{address_type} with address: '#{least_connected_address}' and active connections: #{least_active_connections}")
 
             least_connected_address
           end

@@ -11,12 +11,12 @@ module Neo4j::Driver
         end
 
         def on_success(_metadata)
-          @log.debug("Channel #{@channel} pinged successfully")
+          @log.info("Channel #{@channel} pinged successfully")
           @result.set_success(true)
         end
 
         def on_failure(error)
-          @log.debug("Channel #{@channel} failed ping #{error}")
+          @log.info("Channel #{@channel} failed ping #{error}")
           @result.set_success(false)
         end
 
