@@ -24,7 +24,7 @@ module Neo4j::Driver
       end
 
       def create_session(database_name, mode, bookmark_holder, fetch_size, impersonated_user)
-        (@leaked_sessions_logging_enabled ? org.neo4j.driver.internal.async.LeakLoggingNetworkSession : Async::NetworkSession)
+        (@leaked_sessions_logging_enabled ? Async::LeakLoggingNetworkSession : Async::NetworkSession)
           .new(@connection_provider, @retry_logic, database_name, mode, bookmark_holder, impersonated_user, fetch_size, @logger)
       end
     end
