@@ -77,7 +77,7 @@ module Neo4j::Driver
       alias eql? ==
 
       def to_s
-        "#{host}#{"(#{connection_host})" unless host == connection_host}:#{port}"
+        "BoltServerAddress: #{host}#{"(#{connection_host})" unless host == connection_host}:#{port}"
       end
 
       # Create a stream of unicast addresses.

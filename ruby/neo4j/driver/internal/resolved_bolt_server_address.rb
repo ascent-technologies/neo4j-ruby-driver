@@ -28,7 +28,7 @@ module Neo4j::Driver
 
       def create_string_representation
         host_addresses = @resolved_addresses.take(MAX_HOST_ADDRESSES_IN_STRING_VALUE).map(&:ip_address).join(',')
-        "#{host}(#{host_addresses}#{',...' if @resolved_addresses.size > MAX_HOST_ADDRESSES_IN_STRING_VALUE}):#{port}"
+        "ResolvedBoltServerAddress: #{host}(#{host_addresses}#{',...' if @resolved_addresses.size > MAX_HOST_ADDRESSES_IN_STRING_VALUE}):#{port}"
       end
     end
   end
